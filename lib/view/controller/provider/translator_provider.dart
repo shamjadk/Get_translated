@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'package:translate_it/core/snack_bar.dart';
 import 'package:translator/translator.dart';
 
 part 'translator_provider.g.dart';
@@ -10,26 +11,19 @@ part 'translator_provider.g.dart';
 class Translator extends _$Translator {
   GoogleTranslator? translator;
   @override
-  Stream<String> build() async* {
+  String build() {
     translator = GoogleTranslator();
-    yield '';
+    return '';
   }
 
-  Stream<String> gettranslated(String? text) async* {
+  Future<void> getTranslated(String? text) async {
     try {
       if (await InternetConnectionChecker().hasConnection) {
-        log('true');
-        if (text!.isEmpty) {
-          text = 'Enter something';
-        } else {
-          text = text;
-        }
-        final result = await translator!.translate(text, from: 'en', to: 'ml');
+        final result = await translator!.translate(text!, from: 'en', to: 'ml');
         log(result.toString());
-        state = AsyncValue.data(result.toString());
-        yield result.toString();
+        state = result.toString();
       } else {
-        log('false');
+        showSnackBar('Internet connection is required');
       }
     } catch (e) {
       log(e.toString());

@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:translate_it/view/controller/provider/translator_provider.dart';
-import 'package:translate_it/view/pages/method.dart';
 
 class HomePage extends ConsumerWidget {
   const HomePage({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final inputController = TextEditingController(text: 'horse');
+    final inputController = TextEditingController();
 
     return Scaffold(
       appBar: AppBar(
@@ -24,22 +23,18 @@ class HomePage extends ConsumerWidget {
             controller: inputController,
             decoration: const InputDecoration(hintText: 'Enter'),
           ),
-          StreamBuilder(
-              stream: ref
-                  .watch(translatorProvider.notifier)
-                  .gettranslated(inputController.text),
-              builder: (context, snapshot) {
-                return Column(
-                  children: [
-                    Text(snapshot.data.toString()),
-                    TextButton(
-                        onPressed: () {
-                          Method.result(inputController.text);
-                        },
-                        child: const Text('translate'))
-                  ],
-                );
-              }),
+          Column(
+            children: [
+              Text(ref.watch(translatorProvider)),
+              TextButton(
+                  onPressed: () {
+                    ref
+                        .read(translatorProvider.notifier)
+                        .getTranslated(inputController.text);
+                  },
+                  child: const Text('translate'))
+            ],
+          ),
         ],
       ),
     );
