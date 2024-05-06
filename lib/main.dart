@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:translate_it/view/pages/home_page.dart';
+import 'package:translate_it/view/pages/translate_page.dart';
 
 void main() {
   runApp(const ProviderScope(child: MyApp()));
@@ -12,11 +12,11 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return  MaterialApp(
+    return MaterialApp(
       scaffoldMessengerKey: MyApp.scaffoldMessengerKey,
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
-      home: const HomePage(),
+      home: const TranslatePage(),
     );
   }
 }

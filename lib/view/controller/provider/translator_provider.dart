@@ -19,14 +19,19 @@ class Translator extends _$Translator {
   Future<void> getTranslated(String? text) async {
     try {
       if (await InternetConnectionChecker().hasConnection) {
-        final result = await translator!.translate(text!, from: 'en', to: 'ml');
-        log(result.toString());
+        if (text!.isEmpty) {
+          state = '';
+        }
+        final result =
+            await translator!.translate(text.trim(), from: 'en', to: 'ml');
+
         state = result.toString();
       } else {
         showSnackBar('Internet connection is required');
       }
     } catch (e) {
       log(e.toString());
+      state = '';
     }
   }
 }
