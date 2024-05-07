@@ -18,6 +18,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       scaffoldMessengerKey: MyApp.scaffoldMessengerKey,
       debugShowCheckedModeBanner: false,
+      // theme: ThemeData.dark(),
       title: 'Flutter Demo',
       home: const TranslatePage(),
     );

@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:translate_it/controller/objectbox_store.dart';
@@ -15,19 +16,22 @@ part 'translator_provider.g.dart';
 @riverpod
 class Translator extends _$Translator {
   GoogleTranslator? translator;
-  late final Box<HistoryEntityModel> box;
+  final Box<HistoryEntityModel> box = HistoryObjectboxStore.instance.historyBox;
   @override
   ProviderState build() {
     translator = GoogleTranslator();
-    box = HistoryObjectboxStore.instance.historyBox;
     return ProviderState(translatedResult: '', history: box.getAll());
   }
 
-  Future<void> getTranslated(String? text) async {
+  Future<void> getTranslated(
+    String? text,
+  ) async {
     try {
       if (await InternetConnectionChecker().hasConnection) {
-        final result =
-            await translator!.translate(text!.trim(), from: 'en', to: 'ml');
+        final result = await translator!.translate(text!.trim(),
+            from: ref.watch(fromLangCodeProvider),
+            to: ref.watch(toLangCodeProvider));
+        log('translated ${ref.watch(toLangCodeProvider)} ${ref.watch(fromLangCodeProvider)}');
         state = state.copyWith(translatedResult: result.toString());
       } else {
         showSnackBar('Internet connection is required');
@@ -38,17 +42,13 @@ class Translator extends _$Translator {
   }
 
   Future<void> addToHistory(HistoryEntityModel model) async {
-    if (state.translatedResult.isNotEmpty) {
-      try {
-        box.put(model);
-        log('${model.resultText!} ${model.sourceText} ${model.id}');
-        state = state.copyWith(history: box.getAll());
-        log('added to history');
-      } catch (e) {
-        log(e.toString());
-      }
-    } else {
-      log('translated result state is empty, cannot add to history');
+    try {
+      box.put(model);
+      log('${model.sourceText!} ${model.resultText} ${model.id}');
+      state = state.copyWith(history: box.getAll());
+      log('added to history');
+    } catch (e) {
+      log(e.toString());
     }
   }
 
@@ -65,8 +65,13 @@ class Translator extends _$Translator {
 
   Future<void> clearHistory() async {
     try {
-      box.removeAll();
-      state = state.copyWith(history: box.getAll());
+      if (state.history!.isNotEmpty) {
+        box.removeAll();
+        state = state.copyWith(history: box.getAll());
+        showSnackBar('Cleared history');
+      } else {
+        showSnackBar('Nothing to clear');
+      }
     } catch (e) {
       log(e.toString());
     }
@@ -76,3 +81,10 @@ class Translator extends _$Translator {
     state = state.copyWith(translatedResult: '');
   }
 }
+
+final fromLangCodeProvider = StateProvider<String>((ref) {
+  return 'en';
+});
+final toLangCodeProvider = StateProvider<String>((ref) {
+  return 'en';
+});

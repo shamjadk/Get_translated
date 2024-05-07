@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:translate_it/core/theme.dart';
 
-class BottomElevatedButtonWidget extends StatelessWidget {
+class ElevatedButtonWidget extends StatelessWidget {
   final String btnName;
   final VoidCallback onPressed;
-  const BottomElevatedButtonWidget(
+  const ElevatedButtonWidget(
       {super.key, required this.btnName, required this.onPressed});
 
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 44,
-      width: MediaQuery.sizeOf(context).width - 32,
+      height: 36,
+      width: MediaQuery.sizeOf(context).width / 2.8,
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(
             shadowColor: Colors.black,
