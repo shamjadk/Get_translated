@@ -1,5 +1,6 @@
 #Generated files
 **/*.g.dart
+**/*.freezed.dart
 
 # Miscellaneous
 *.class

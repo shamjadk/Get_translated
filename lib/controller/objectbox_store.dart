@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:path_provider/path_provider.dart';
 import 'package:translate_it/model/history_entity_model.dart';
 import 'package:translate_it/objectbox.g.dart';
@@ -18,11 +20,15 @@ class HistoryObjectboxStore {
 
   static Future<void> create() async {
     if (_instance == null) {
-      final docsDir = await getApplicationDocumentsDirectory();
-      final store = await openStore(
-        directory: path.join(docsDir.path, 'history'),
-      );
-      _instance = HistoryObjectboxStore._create(store);
+      try {
+        final docsDir = await getApplicationDocumentsDirectory();
+        final store = await openStore(
+          directory: path.join(docsDir.path, 'history'),
+        );
+        _instance = HistoryObjectboxStore._create(store);
+      } catch (e) {
+        log('Error creating HistoryObjectboxStore: $e');
+      }
     }
   }
 }
