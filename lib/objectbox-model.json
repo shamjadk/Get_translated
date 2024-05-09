@@ -5,7 +5,7 @@
   "entities": [
     {
       "id": "1:5228244730775983964",
-      "lastPropertyId": "3:6298095960473606679",
+      "lastPropertyId": "4:9121507414805697214",
       "name": "HistoryEntityModel",
       "properties": [
         {
@@ -20,7 +20,7 @@
           "type": 9
         },
         {
-          "id": "3:6298095960473606679",
+          "id": "4:9121507414805697214",
           "name": "resultText",
           "type": 9
         }
@@ -36,7 +36,9 @@
   "modelVersionParserMinimum": 5,
   "retiredEntityUids": [],
   "retiredIndexUids": [],
-  "retiredPropertyUids": [],
+  "retiredPropertyUids": [
+    6298095960473606679
+  ],
   "retiredRelationUids": [],
   "version": 1
 }

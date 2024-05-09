@@ -4,8 +4,10 @@ import 'package:translate_it/core/theme.dart';
 class TextFieldWidget extends StatelessWidget {
   final TextEditingController controller;
   final void Function(String)? onSubmitted;
+  final void Function(String)? onChanged;
+
   const TextFieldWidget(
-      {super.key, required this.controller,  this.onSubmitted});
+      {super.key, required this.controller, this.onSubmitted, this.onChanged});
 
   @override
   Widget build(BuildContext context) {

@@ -10,17 +10,19 @@ class ElevatedButtonWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 36,
       width: MediaQuery.sizeOf(context).width / 2.8,
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(
+            padding: const EdgeInsets.all(12),
             shadowColor: Colors.black,
             elevation: 4,
             backgroundColor: AppTheme.primaryColor,
             foregroundColor: Colors.white),
         onPressed: onPressed,
         child: Text(
+          textAlign: TextAlign.center,
           btnName,
+          style: const TextStyle(fontSize: 12),
         ),
       ),
     );

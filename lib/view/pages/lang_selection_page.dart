@@ -7,6 +7,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:translate_it/controller/provider/translator_provider.dart';
 import 'package:translate_it/core/langs.dart';
+import 'package:translate_it/core/theme.dart';
 import 'package:translate_it/view/pages/translate_page.dart';
 import 'package:translate_it/view/widgets/app_bar_widget.dart';
 import 'package:translate_it/view/widgets/back_button_widget.dart';
@@ -18,10 +19,30 @@ class LangSelectionPage extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final _selectedLangCode = useState<String>('');
-    final _selectedLang = useState<String>('');
+    final _selectedLangCode = useState<String>(isFromLang
+        ? ref.watch(fromLangCodeProvider)
+        : ref.watch(toLangCodeProvider));
+
+    final _selectedLang = useState<String>(isFromLang
+        ? ref.watch(fromLangBtnNameProvider)
+        : ref.watch(toLangBtnNameProvider));
+
     final _selectedIndex = useState<int>(-1);
     final searchController = useTextEditingController();
+
+    final List<MapEntry<String, String>> langList =
+        Langs.languages.entries.toList();
+
+    final searchResults = useState(langList);
+
+    void searchLangs() {
+      searchResults.value = langList
+          .where((element) => element
+              .toString()
+              .trim()
+              .startsWith(searchController.text.toLowerCase().trim()))
+          .toList();
+    }
 
     void changeLang() {
       isFromLang
@@ -53,6 +74,9 @@ class LangSelectionPage extends HookConsumerWidget {
               padding: const EdgeInsets.symmetric(horizontal: 16),
               child: TextFieldWidget(
                 controller: searchController,
+                onChanged: (value) {
+                  searchLangs();
+                },
               ),
             ),
           ),
@@ -78,26 +102,46 @@ class LangSelectionPage extends HookConsumerWidget {
                 ListView.builder(
                   shrinkWrap: true,
                   physics: const ClampingScrollPhysics(),
-                  itemCount: Langs.langs.length,
+                  itemCount: searchResults.value.length,
                   itemBuilder: (context, index) {
-                    final List<MapEntry<String, String>> data =
-                        Langs.languages.entries.toList();
                     return InkWell(
                         onTap: () {
                           _selectedIndex.value = index;
                           _selectedLangCode.value =
-                              data[_selectedIndex.value].value;
-                          _selectedLang.value = data[_selectedIndex.value].key;
+                              searchResults.value[_selectedIndex.value].value;
+                          _selectedLang.value =
+                              searchResults.value[_selectedIndex.value].key;
                         },
                         child: Container(
+                            padding: EdgeInsets.symmetric(
+                                horizontal:
+                                    index == _selectedIndex.value ? 16 : 0),
                             color: index == _selectedIndex.value
-                                ? Colors.grey.shade300
+                                ? AppTheme.primaryColor
                                 : Colors.transparent,
                             width: MediaQuery.sizeOf(context).width,
                             height: 40,
                             child: Align(
                                 alignment: Alignment.centerLeft,
-                                child: Text(data[index].key))));
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text(
+                                      searchResults.value[index].key,
+                                      style: TextStyle(
+                                          color: index == _selectedIndex.value
+                                              ? Colors.white
+                                              : Colors.black),
+                                    ),
+                                    Icon(
+                                      Icons.done,
+                                      color: index == _selectedIndex.value
+                                          ? Colors.white
+                                          : Colors.transparent,
+                                    )
+                                  ],
+                                ))));
                   },
                 ),
                 const SizedBox(
