@@ -62,6 +62,9 @@ class HistoryPage extends ConsumerWidget {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text(data![index].sourceText!),
+                                    const SizedBox(
+                                      height: 8,
+                                    ),
                                     Text(data[index].resultText!)
                                   ],
                                 ),
@@ -85,7 +88,7 @@ class HistoryPage extends ConsumerWidget {
               child: Text('No history'),
             ),
       floatingActionButton: BottomElevatedButtonWidget(
-        btnName: 'Clear',
+        child: const Text('Clear'),
         onPressed: () {
           ref.read(translatorProvider.notifier).clearHistory();
         },

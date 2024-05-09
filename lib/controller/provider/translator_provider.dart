@@ -6,6 +6,7 @@ import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:translate_it/controller/objectbox_store.dart';
 import 'package:translate_it/controller/provider/provider_state.dart';
+import 'package:translate_it/core/langs.dart';
 import 'package:translate_it/core/snack_bar.dart';
 import 'package:translate_it/model/history_entity_model.dart';
 import 'package:translate_it/objectbox.g.dart';
@@ -31,7 +32,7 @@ class Translator extends _$Translator {
         final result = await translator!.translate(text!.trim(),
             from: ref.watch(fromLangCodeProvider),
             to: ref.watch(toLangCodeProvider));
-        log('translated ${ref.watch(toLangCodeProvider)} ${ref.watch(fromLangCodeProvider)}');
+        log('translated from ${ref.watch(fromLangCodeProvider)} to ${ref.watch(toLangCodeProvider)}');
         state = state.copyWith(translatedResult: result.toString());
       } else {
         showSnackBar('Internet connection is required');
@@ -44,7 +45,7 @@ class Translator extends _$Translator {
   Future<void> addToHistory(HistoryEntityModel model) async {
     try {
       box.put(model);
-      log('${model.sourceText!} ${model.resultText} ${model.id}');
+      log('${model.sourceText!}: ${model.resultText} ${model.id}');
       state = state.copyWith(history: box.getAll());
       log('added to history');
     } catch (e) {
@@ -56,7 +57,7 @@ class Translator extends _$Translator {
     try {
       box.remove(id);
       state = state.copyWith(history: box.getAll());
-      Navigator.pop(context);
+
       showSnackBar('Deleted');
     } catch (e) {
       log(e.toString());
@@ -75,6 +76,21 @@ class Translator extends _$Translator {
     } catch (e) {
       log(e.toString());
     }
+  }
+
+  List<MapEntry<String, String>>? searchLang(String text) {
+    final List<MapEntry<String, String>> langList =
+        Langs.languages.entries.toList();
+    final searchResults = langList
+        .where((element) =>
+            element.key.toLowerCase().startsWith(text.toLowerCase().trim()))
+        .toList();
+    if (text.isEmpty) {
+      log('Empty input');
+    } else {
+      return searchResults;
+    }
+    return null;
   }
 
   void clearState() {

@@ -28,13 +28,9 @@ class TranslatePage extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final isLoading = useState(false);
     final translateController = useTextEditingController();
-    final historyModel = HistoryEntityModel(
-      sourceText: translateController.text,
-      resultText: ref.watch(translatorProvider).translatedResult.isEmpty
-          ? ''
-          : ref.watch(translatorProvider).translatedResult,
-    );
+
     return GestureDetector(
       onTap: () {
         FocusScope.of(context).unfocus();
@@ -129,18 +125,36 @@ class TranslatePage extends HookConsumerWidget {
                         },
                       )
                     ],
-                  )
+                  ),
                 ],
               ),
             ),
           ),
           floatingActionButton: BottomElevatedButtonWidget(
-            btnName: 'Translate',
+            child: isLoading.value
+                ? const SizedBox(
+                    height: 24,
+                    width: 24,
+                    child: CircularProgressIndicator(
+                      color: Colors.white,
+                    ),
+                  )
+                : const Text('Translate'),
             onPressed: () async {
               if (translateController.text.isNotEmpty) {
+                isLoading.value = true;
                 await ref.read(translatorProvider.notifier).getTranslated(
                       translateController.text,
                     );
+                isLoading.value = false;
+                final historyModel = HistoryEntityModel(
+                  sourceText: translateController.text,
+                  resultText:
+                      ref.watch(translatorProvider).translatedResult.isEmpty
+                          ? 'sss'
+                          : ref.watch(translatorProvider).translatedResult,
+                );
+                log('${historyModel.sourceText!}: ${historyModel.resultText} ${historyModel.id}');
                 ref
                     .read(translatorProvider.notifier)
                     .addToHistory(historyModel);
