@@ -15,7 +15,7 @@ class SplashScreen extends HookConsumerWidget {
       Future.delayed(
         const Duration(seconds: 3),
         () {
-          navPush(context, const TranslatePage());
+          navPushReplace(context, const TranslatePage());
         },
       );
       return null;

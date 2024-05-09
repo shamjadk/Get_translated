@@ -7,3 +7,11 @@ navPush(BuildContext context, Widget page) {
         builder: (context) => page,
       ));
 }
+
+navPushReplace(BuildContext context, Widget page) {
+  Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(
+        builder: (context) => page,
+      ));
+}
