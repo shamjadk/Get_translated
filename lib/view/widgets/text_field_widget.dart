@@ -13,6 +13,7 @@ class TextFieldWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return TextField(
       onSubmitted: onSubmitted,
+      onChanged: onChanged,
       controller: controller,
       maxLines: null,
       cursorColor: AppTheme.primaryInLight,

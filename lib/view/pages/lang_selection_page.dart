@@ -37,8 +37,8 @@ class LangSelectionPage extends HookConsumerWidget {
 
     void searchLangs() {
       searchResults.value = langList
-          .where((element) => element
-              .toString()
+          .where((element) => element.key
+              .toLowerCase()
               .trim()
               .startsWith(searchController.text.toLowerCase().trim()))
           .toList();
@@ -97,7 +97,7 @@ class LangSelectionPage extends HookConsumerWidget {
             child: Column(
               children: [
                 const SizedBox(
-                  height: 16,
+                  height: 8,
                 ),
                 ListView.builder(
                   shrinkWrap: true,
@@ -115,7 +115,7 @@ class LangSelectionPage extends HookConsumerWidget {
                         child: Container(
                             padding: EdgeInsets.symmetric(
                                 horizontal:
-                                    index == _selectedIndex.value ? 16 : 0),
+                                    index == _selectedIndex.value ? 24 : 16),
                             color: index == _selectedIndex.value
                                 ? AppTheme.primaryInLight
                                 : Colors.transparent,
@@ -132,7 +132,8 @@ class LangSelectionPage extends HookConsumerWidget {
                                       style: TextStyle(
                                           color: index == _selectedIndex.value
                                               ? Colors.white
-                                              : null),
+                                              : null,
+                                          fontSize: 16),
                                     ),
                                     Icon(
                                       Icons.done,

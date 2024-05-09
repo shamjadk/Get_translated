@@ -61,11 +61,17 @@ class HistoryPage extends ConsumerWidget {
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    Text(data![index].sourceText!),
+                                    Text(
+                                      data![index].sourceText!,
+                                      style: const TextStyle(fontSize: 16),
+                                    ),
                                     const SizedBox(
                                       height: 8,
                                     ),
-                                    Text(data[index].resultText!)
+                                    Text(
+                                      data[index].resultText!,
+                                      style: const TextStyle(fontSize: 16),
+                                    )
                                   ],
                                 ),
                               ),
