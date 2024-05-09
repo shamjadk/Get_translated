@@ -28,4 +28,4 @@ final darkTheme = ThemeData(
     textButtonTheme: TextButtonThemeData(
       style: TextButton.styleFrom(foregroundColor: AppTheme.primaryInDark),
     ),
-    textTheme: TextTheme(bodyMedium: TextStyle(color: Colors.white)));
+    textTheme: const TextTheme(bodyMedium: TextStyle(color: Colors.white)));
