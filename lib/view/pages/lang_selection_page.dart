@@ -42,6 +42,7 @@ class LangSelectionPage extends HookConsumerWidget {
               .trim()
               .startsWith(searchController.text.toLowerCase().trim()))
           .toList();
+      _selectedIndex.value = -1;
     }
 
     void changeLang() {
