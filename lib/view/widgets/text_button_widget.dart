@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:translate_it/core/theme.dart';
 
 class TextButtonWidget extends StatelessWidget {
   final String btnName;
@@ -12,9 +11,6 @@ class TextButtonWidget extends StatelessWidget {
                           onPressed: onPressed,
                           child: Text(
                             btnName,
-                            style: TextStyle(
-                              color: AppTheme.primaryColor,
-                            ),
-                          ));
+    ));
   }
 }

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:translate_it/controller/provider/translator_provider.dart';
-import 'package:translate_it/core/theme.dart';
+import 'package:translate_it/core/theme/theme.dart';
 import 'package:translate_it/view/widgets/app_bar_widget.dart';
 import 'package:translate_it/view/widgets/back_button_widget.dart';
 import 'package:translate_it/view/widgets/bottom_elevated_button_widget.dart';
@@ -39,7 +39,7 @@ class HistoryPage extends ConsumerWidget {
                                   height: 50,
                                   width: MediaQuery.sizeOf(context).width,
                                   decoration: BoxDecoration(
-                                      color: AppTheme.primaryColor,
+                                      color: AppTheme.primaryInLight,
                                       borderRadius: const BorderRadius.vertical(
                                           top: Radius.circular(8))),
                                   child: const Align(

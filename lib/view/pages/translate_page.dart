@@ -6,11 +6,13 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:translate_it/controller/navigator_controller.dart';
 import 'package:translate_it/core/snack_bar.dart';
-import 'package:translate_it/core/theme.dart';
+import 'package:translate_it/core/theme/theme.dart';
 import 'package:translate_it/controller/provider/translator_provider.dart';
+import 'package:translate_it/core/theme/theme_provider.dart';
 import 'package:translate_it/model/history_entity_model.dart';
 import 'package:translate_it/view/pages/history_page.dart';
 import 'package:translate_it/view/pages/lang_selection_page.dart';
+import 'package:translate_it/view/widgets/app_bar_widget.dart';
 import 'package:translate_it/view/widgets/bottom_elevated_button_widget.dart';
 import 'package:translate_it/view/widgets/elevated_button_widget.dart';
 import 'package:translate_it/view/widgets/text_button_widget.dart';
@@ -36,12 +38,16 @@ class TranslatePage extends HookConsumerWidget {
         FocusScope.of(context).unfocus();
       },
       child: Scaffold(
-          appBar: AppBar(
-            centerTitle: true,
-            title: const Text(
-              'Get Translated',
-              style: TextStyle(fontWeight: FontWeight.w500),
-            ),
+          appBar: AppBarWidget(
+            leading: IconButton(
+                onPressed: () {
+                  ref.read(themeProvider.notifier).switchTheme();
+                },
+                icon: Icon(
+                    ref.watch(themeProvider).brightness == Brightness.dark
+                        ? Icons.dark_mode
+                        : Icons.light_mode)),
+            title: 'Get Translated',
             actions: [
               IconButton(
                   onPressed: () => navPush(context, const HistoryPage()),
@@ -95,8 +101,8 @@ class TranslatePage extends HookConsumerWidget {
                         horizontal: 12, vertical: 16),
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(8),
-                        border:
-                            Border.all(color: AppTheme.primaryColor, width: 1)),
+                        border: Border.all(
+                            color: AppTheme.primaryInLight, width: 1)),
                     child: Text(
                       ref.watch(translatorProvider).translatedResult,
                       style: const TextStyle(

@@ -7,7 +7,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:translate_it/controller/provider/translator_provider.dart';
 import 'package:translate_it/core/langs.dart';
-import 'package:translate_it/core/theme.dart';
+import 'package:translate_it/core/theme/theme.dart';
 import 'package:translate_it/view/pages/translate_page.dart';
 import 'package:translate_it/view/widgets/app_bar_widget.dart';
 import 'package:translate_it/view/widgets/back_button_widget.dart';
@@ -117,7 +117,7 @@ class LangSelectionPage extends HookConsumerWidget {
                                 horizontal:
                                     index == _selectedIndex.value ? 16 : 0),
                             color: index == _selectedIndex.value
-                                ? AppTheme.primaryColor
+                                ? AppTheme.primaryInLight
                                 : Colors.transparent,
                             width: MediaQuery.sizeOf(context).width,
                             height: 40,
@@ -132,7 +132,7 @@ class LangSelectionPage extends HookConsumerWidget {
                                       style: TextStyle(
                                           color: index == _selectedIndex.value
                                               ? Colors.white
-                                              : Colors.black),
+                                              : null),
                                     ),
                                     Icon(
                                       Icons.done,
