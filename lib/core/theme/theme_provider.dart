@@ -8,7 +8,7 @@ part 'theme_provider.g.dart';
 class Theme extends _$Theme {
   @override
   ThemeData build() {
-    return darkTheme;
+    return lightTheme;
   }
 
   void switchTheme() {

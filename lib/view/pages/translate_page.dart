@@ -5,7 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:translate_it/controller/navigator_controller.dart';
-import 'package:translate_it/core/snack_bar.dart';
+import 'package:translate_it/core/utils/snack_bar.dart';
 import 'package:translate_it/core/theme/theme.dart';
 import 'package:translate_it/controller/provider/translator_provider.dart';
 import 'package:translate_it/core/theme/theme_provider.dart';

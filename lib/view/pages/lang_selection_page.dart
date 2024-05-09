@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:translate_it/controller/provider/translator_provider.dart';
-import 'package:translate_it/core/langs.dart';
+import 'package:translate_it/core/utils/langs.dart';
 import 'package:translate_it/core/theme/theme.dart';
 import 'package:translate_it/view/pages/translate_page.dart';
 import 'package:translate_it/view/widgets/app_bar_widget.dart';

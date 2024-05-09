@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:translate_it/controller/objectbox_store.dart';
 import 'package:translate_it/core/theme/theme_provider.dart';
-import 'package:translate_it/view/pages/translate_page.dart';
+import 'package:translate_it/view/pages/splash_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -21,7 +21,7 @@ class MyApp extends ConsumerWidget {
       debugShowCheckedModeBanner: false,
       theme: ref.watch(themeProvider),
       title: 'Flutter Demo',
-      home: const TranslatePage(),
+      home: const SplashScreen(),
     );
   }
 }
