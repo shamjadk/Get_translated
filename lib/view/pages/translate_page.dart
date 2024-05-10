@@ -44,7 +44,7 @@ class TranslatePage extends HookConsumerWidget {
                   ref.read(themeProvider.notifier).switchTheme();
                 },
                 icon: Icon(
-                    ref.watch(themeProvider).brightness == Brightness.dark
+                    ref.watch(themeProvider).brightness != Brightness.dark
                         ? Icons.dark_mode
                         : Icons.light_mode)),
             title: 'Get Translated',
@@ -157,7 +157,7 @@ class TranslatePage extends HookConsumerWidget {
                   sourceText: translateController.text,
                   resultText:
                       ref.watch(translatorProvider).translatedResult.isEmpty
-                          ? 'sss'
+                          ? 'No result'
                           : ref.watch(translatorProvider).translatedResult,
                 );
                 log('${historyModel.sourceText!}: ${historyModel.resultText} ${historyModel.id}');

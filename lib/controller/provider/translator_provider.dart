@@ -57,8 +57,8 @@ class Translator extends _$Translator {
     try {
       box.remove(id);
       state = state.copyWith(history: box.getAll());
-
-      showSnackBar('Deleted');
+      Navigator.pop(context);
+      // showSnackBar('Deleted');
     } catch (e) {
       log(e.toString());
     }
