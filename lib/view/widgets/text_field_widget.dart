@@ -24,7 +24,9 @@ class TextFieldWidget extends StatelessWidget {
           enabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(8),
               borderSide: BorderSide(color: AppTheme.primaryInLight, width: 1)),
-          hintText: 'Enter something',
+          labelText: 'Enter text',
+          labelStyle:
+              const TextStyle(color: Colors.grey, fontWeight: FontWeight.w500),
           hintStyle:
               const TextStyle(fontWeight: FontWeight.w500, fontSize: 16)),
     );

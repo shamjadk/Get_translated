@@ -17,10 +17,6 @@ final lightTheme = ThemeData(
   textButtonTheme: TextButtonThemeData(
     style: TextButton.styleFrom(foregroundColor: AppTheme.primaryInLight),
   ),
-  textTheme: const TextTheme(
-    bodyMedium: TextStyle(color: Colors.black),
-    bodyLarge: TextStyle(color: Colors.grey, fontSize: 16),
-  ),
 );
 
 final darkTheme = ThemeData(
@@ -34,9 +30,5 @@ final darkTheme = ThemeData(
   ),
   textButtonTheme: TextButtonThemeData(
     style: TextButton.styleFrom(foregroundColor: AppTheme.primaryInDark),
-  ),
-  textTheme: const TextTheme(
-    bodyMedium: TextStyle(color: Colors.white),
-    bodyLarge: TextStyle(color: Colors.grey, fontSize: 16),
   ),
 );
