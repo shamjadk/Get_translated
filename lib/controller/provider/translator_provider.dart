@@ -21,7 +21,8 @@ class Translator extends _$Translator {
   @override
   ProviderState build() {
     translator = GoogleTranslator();
-    return ProviderState(translatedResult: '', history: box.getAll());
+    return ProviderState(
+        translatedResult: 'Translation', history: box.getAll());
   }
 
   Future<void> getTranslated(
@@ -94,7 +95,7 @@ class Translator extends _$Translator {
   }
 
   void clearState() {
-    state = state.copyWith(translatedResult: '');
+    state = state.copyWith(translatedResult: 'Translation');
   }
 }
 

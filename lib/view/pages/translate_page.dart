@@ -33,6 +33,10 @@ class TranslatePage extends HookConsumerWidget {
     final isLoading = useState(false);
     final translateController = useTextEditingController();
 
+    bool isStateEmpty() {
+      return ref.read(translatorProvider).translatedResult == 'Translation';
+    }
+
     return GestureDetector(
       onTap: () {
         FocusScope.of(context).unfocus();
@@ -105,8 +109,25 @@ class TranslatePage extends HookConsumerWidget {
                             color: AppTheme.primaryInLight, width: 1)),
                     child: Text(
                       ref.watch(translatorProvider).translatedResult,
-                      style: const TextStyle(
+                      style:isStateEmpty()? const TextStyle(fontWeight: FontWeight.w500, fontSize: 16,color: Colors.grey): const TextStyle(
                           fontWeight: FontWeight.w500, fontSize: 16),
+                    ),
+                  ),
+                  Align(
+                    alignment: Alignment.centerRight,
+                    child: TextButtonWidget(
+                      btnName: 'Copy',
+                      onPressed: () {
+                        if (!isStateEmpty()) {
+                          Clipboard.setData(ClipboardData(
+                              text: ref
+                                  .watch(translatorProvider)
+                                  .translatedResult));
+                          showSnackBar('Copied text');
+                        } else {
+                          showSnackBar('Nothing to copy');
+                        }
+                      },
                     ),
                   ),
                   const SizedBox(
@@ -156,7 +177,9 @@ class TranslatePage extends HookConsumerWidget {
                 final historyModel = HistoryEntityModel(
                   sourceText: translateController.text,
                   resultText:
-                      ref.watch(translatorProvider).translatedResult.isEmpty
+                      ref.watch(translatorProvider).translatedResult.isEmpty ||
+                              ref.watch(translatorProvider).translatedResult ==
+                                  'Translation'
                           ? 'No result'
                           : ref.watch(translatorProvider).translatedResult,
                 );
